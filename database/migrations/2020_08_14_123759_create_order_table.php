@@ -15,10 +15,10 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->bigIncrements('id_order');
-            $table->string('id_product');
             $table->string('tgl_pesan');
+            $table->integer('kode_barang');
             $table->string('jumlah_pesanan');
-            $table->integer('id_cutomers');
+            $table->integer('id_customers');
             $table->foreign('id_customers')->references('id_customers')->on('customers');
             $table->foreign('id_produk')->references('id_produk')->on('produk');
         });
