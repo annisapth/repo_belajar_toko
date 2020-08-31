@@ -19,3 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/customers', 'CustomersController@store');
 Route::post('/produk', 'ProdukController@store');
 Route::post('/order', 'OrderController@store');
+
+
+Route::get('/customers', 'CustomersController@show');
+Route::post('/customers', 'CustomersController@store');
+
+Route::get('/produk', 'ProdukController@show');
+Route::post('/produk', 'ProdukController@store');
+
+Route::get('/order', 'OrderController@show');
+Route::get('/Order', 'OrderController@detail');
+Route::post('/Order', 'OrderController@store');
+
