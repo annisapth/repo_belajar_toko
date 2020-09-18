@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function destroy ($id) {
+        $hapus = Order::where('id_order', $id)->delete();
+        if($hapus) {
+            return Response()->json(['status' => 1]);
+        }
+        else {
+            return Response()->json(['status' => 0]);
+        }
+    }
     public function update($id, Request $request) {
         $validator=Validator::make($request->all(),
         [
@@ -18,7 +27,6 @@ class OrderController extends Controller
             'jumlah_pesanan' => 'required'
         ]
         );
-
         if($validator->fails()) {
             return Response()->json($validator->errors());
         }
