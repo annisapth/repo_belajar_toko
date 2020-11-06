@@ -2,36 +2,35 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::post('/register', 'UserController@register'); 
+Route::post('/login', 'UserController@login'); 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['jwt.verify']], function () 
+{
+    Route::group(['middleware' => ['api.superadmin']], function() 
+    {
+    Route::delete('/order/{id}', 'OrderController@destroy');
+    Route::delete('/produk/{id}', 'ProdukController@destroy');
+    Route::delete('/customers/{id}', 'CustomersController@destroy');
+    });
+    
+    Route::group(['middleware' => ['api.admin']], function () 
+    {
+    Route::post('/customers', 'CustomersController@store');
+
+    Route::post('/produk', 'ProdukController@store');
+
+    Route::post('/order', 'OrderController@store');
+    Route::put('/order/{id}', 'OrderController@update');
+    });
+
+    Route::get('/customers', 'CustomersController@show');
+    
+    Route::get('/produk', 'ProdukController@show');
+    
+    Route::get('/order', 'OrderController@show');
+    Route::get('/order/{id}', 'OrderController@detail');
+    
+    
 });
-Route::post('/customers', 'CustomersController@store');
-Route::post('/produk', 'ProdukController@store');
-Route::post('/order', 'OrderController@store');
 
-
-Route::get('/customers', 'CustomersController@show');
-Route::post('/customers', 'CustomersController@store');
-
-Route::get('/produk', 'ProdukController@show');
-Route::post('/produk', 'ProdukController@store');
-
-Route::get('/order', 'OrderController@show');
-Route::get('/order/{id}', 'OrderController@detail');
-Route::post('/order', 'OrderController@store');
-Route::put('/order/{id}', 'OrderController@update');
-
-Route::delete('/order/{id}', 'OrderController@destroy');
-Route::delete('/produk/{id}', 'ProdukController@destroy');
-Route::delete('/customers/{id}', 'CustomersController@destroy');

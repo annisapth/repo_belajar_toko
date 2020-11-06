@@ -45,7 +45,7 @@ class CustomersController extends Controller
         ]);
 
         if($simpan) {
-            return Response()->json(['status=>1']);
+            return Response()->json(['status'=> 1]);
         }
         else {
             return Response()->json(['status=>0']);
